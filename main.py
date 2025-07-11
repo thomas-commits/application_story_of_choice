@@ -1,11 +1,25 @@
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
+import json
+
+import os
+import json
+import streamlit as st
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # Initialize Firebase only once
 if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
-    firebase_admin.initialize_app(cred)
+    firebase_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+    if not firebase_json:
+        st.error("❌ Firebase credentials not found. Check your Render environment variables.")
+    else:
+        cred_dict = json.loads(firebase_json)
+        cred = credentials.Certificate(cred_dict)
+        firebase_admin.initialize_app(cred)
+
 
 # Connect to Firestore
 db = firestore.client()

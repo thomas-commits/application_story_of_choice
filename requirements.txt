@@ -4,3 +4,4 @@ aiofiles==24.1.0
 sqlalchemy==2.0.19
 alembic==1.14.1
 streamlit==1.26.1
+firebase-admin
